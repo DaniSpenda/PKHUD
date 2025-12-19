@@ -7,7 +7,7 @@
 //  Licensed under the MIT license.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 //! Project version number for PKHUD.
 FOUNDATION_EXPORT double PKHUDVersionNumber;

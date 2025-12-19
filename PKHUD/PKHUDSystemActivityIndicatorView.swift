@@ -41,7 +41,7 @@ public final class PKHUDSystemActivityIndicatorView: PKHUDSquareBaseView, PKHUDA
 
     let activityIndicatorView: UIActivityIndicatorView = {
         #if swift(>=4.2)
-        let activity = UIActivityIndicatorView(style: .whiteLarge)
+        let activity = UIActivityIndicatorView(style: .large)
         #else
         let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         #endif

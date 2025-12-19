@@ -153,12 +153,31 @@ internal class ContainerView: UIView {
     }
     
     // MARK: - Helpers
-    private func animateHUDWith(duration: Double, curve: UIView.AnimationCurve, toLocation location: CGPoint) {
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(TimeInterval(duration))
-        UIView.setAnimationCurve(curve)
-        frameView.center = location
-        UIView.commitAnimations()
+    private func animateHUDWith(duration: Double,
+                                curve: UIView.AnimationCurve,
+                                toLocation location: CGPoint) {
+        
+        let animationOptions: UIView.AnimationOptions
+        
+        switch curve {
+        case .easeInOut:
+            animationOptions = .curveEaseInOut
+        case .easeIn:
+            animationOptions = .curveEaseIn
+        case .easeOut:
+            animationOptions = .curveEaseOut
+        case .linear:
+            animationOptions = .curveLinear
+        @unknown default:
+            animationOptions = .curveEaseInOut
+        }
+        
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       options: animationOptions,
+                       animations: {
+            self.frameView.center = location
+        })
     }
     
     private func calculateHudCenter() -> CGPoint {

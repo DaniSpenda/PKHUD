@@ -21,13 +21,19 @@ internal class WindowRootViewController: UIViewController {
     }
 
     internal override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.presentingViewController?.preferredStatusBarStyle ?? UIApplication.shared.statusBarStyle
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            return windowScene.statusBarManager?.statusBarStyle ?? .default
+        }
+        return self.presentingViewController?.preferredStatusBarStyle ?? .default
     }
 
     internal override var prefersStatusBarHidden: Bool {
-        return self.presentingViewController?.prefersStatusBarHidden ?? UIApplication.shared.isStatusBarHidden
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            return windowScene.statusBarManager?.isStatusBarHidden ?? false
+        }
+        return self.presentingViewController?.prefersStatusBarHidden ?? false
     }
-
+    
     internal override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         if let rootViewController = UIApplication.shared.delegate?.window??.rootViewController {
             return rootViewController.preferredStatusBarUpdateAnimation

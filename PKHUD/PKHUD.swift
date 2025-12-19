@@ -123,7 +123,17 @@ open class PKHUD: NSObject {
     open var trailingMargin: CGFloat = 0
 
     open func show(onView view: UIView? = nil) {
-        let view: UIView = view ?? viewToPresentOn ?? UIApplication.shared.keyWindow!
+        
+        let view: UIView = view ?? viewToPresentOn ?? {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
+                return window
+            }
+            // failsafe, but that shouldn't happen
+            print("Error: couldn't find a suitable view to show PKHUD on. Using a dummy view.")
+            return UIView()
+        }()
+        
         if  !view.subviews.contains(container) {
             view.addSubview(container)
             container.frame.origin = CGPoint.zero
